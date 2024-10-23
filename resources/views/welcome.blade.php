@@ -22,10 +22,6 @@
         <div class="mt-4">
             <a href="{{ url('/ibge') }}" class="btn btn-primary btn-lg mx-2">API do IBGE</a>
             <a href="{{ url('/brasilapi') }}" class="btn btn-success btn-lg mx-2">Brasil API</a>
-            {{env('IBGE_API_URL')}}<br> 
-            {{env('APP_URL')}}<br> 
-            {{env('APP_ENV')}}<br> 
-            
         </div>
     </div>
 </body>
