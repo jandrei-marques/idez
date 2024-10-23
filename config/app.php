@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Idez'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://idez-7ed2cac2f70f.herokuapp.com/'),
+    'url' => env('APP_URL', 'https://idez-99613ca33a27.herokuapp.com/'),
 
     'asset_url' => env('ASSET_URL'),
 
