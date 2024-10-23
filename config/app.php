@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://idez-99613ca33a27.herokuapp.com/'),
+    'url' => env('APP_URL', 'http://localhost/'),
 
     'asset_url' => env('ASSET_URL'),
 
