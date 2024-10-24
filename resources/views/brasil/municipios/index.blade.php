@@ -34,6 +34,31 @@
                     @endforeach
                 </tbody>
             </table>
+            <nav aria-label="Navegação">
+                <ul class="pagination">
+                    @if ($currentPage > 1)
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ $currentPage - 1 }}" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    @endif
+    
+                    @for ($i = 1; $i <= $lastPage; $i++)
+                        <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                            <a class="page-link" href="?page={{ $i }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+    
+                    @if ($currentPage < $lastPage)
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ $currentPage + 1 }}" aria-label="Próximo">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
         @endif
         <a href="{{ url('/brasilapi') }}" class="btn btn-primary mt-3">Voltar para Estados</a>
     </div>

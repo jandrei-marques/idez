@@ -20,7 +20,9 @@ class IbgeController extends Controller
             if ($response->successful())
             {
                 $estados = collect($response->json())->sortBy('nome');
-            }else{
+            }
+            else
+            {
                 throw new Exception($response->status());
             }
         }
@@ -31,26 +33,34 @@ class IbgeController extends Controller
         return view('ibge.estados.index', compact('estados', 'errorMessage'));
     }
 
-    public function municipios($uf = null)
+    public function municipios($uf = null, Request $request)
     {
-        if (empty($uf)) {
+        if (empty($uf))
+        {
             return redirect('/brasilapi');
         }
-        $municipios = [];
-        $errorMessage = null;
-        
+        $paginatedMunicipios = [];
+        $errorMessage = $currentPage = $lastPage = null;
+
         try
         {
             $url = env('IBGE_API_URL') . "/$uf/municipios";
             $response = Http::withOptions(['verify' => false])->get($url);
             if ($response->successful())
             {
-                $municipios = collect($response->json())->sortBy('nome');
-                if(!count($municipios))
+                $resultMunicipios = collect($response->json())->sortBy('nome');
+                if (!count($resultMunicipios))
                 {
                     throw new Exception('UF não encontrada');
                 }
-            }else{
+
+                $perPage = 10;
+                $currentPage = $request->get('page', 1);
+                $paginatedMunicipios = $resultMunicipios->slice(($currentPage - 1) * $perPage, $perPage)->all();
+                $lastPage = ceil($resultMunicipios->count() / $perPage);
+            }
+            else
+            {
                 throw new Exception($response->status());
             }
         }
@@ -59,6 +69,12 @@ class IbgeController extends Controller
             $errorMessage = 'Erro ao buscar dados dos municipios na API IBGE: ' . $e->getMessage();
         }
 
-        return view('ibge.municipios.index', compact('municipios', 'errorMessage'));
+        return view('ibge.municipios.index', [
+            'municipios' => $paginatedMunicipios,
+            'currentPage' => $currentPage,
+            'errorMessage' => $errorMessage,
+            'uf' => $uf,
+            'lastPage' => $lastPage,
+        ]);
     }
 }
